@@ -1,5 +1,5 @@
 import { UserProvider } from '@auth0/nextjs-auth0';
-import Layout from '../components/Layout'
+import Layout from 'components/Layout'
 import "tailwindcss/tailwind.css";
 
 function MyApp({ Component, pageProps }) {

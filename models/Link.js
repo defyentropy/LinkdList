@@ -26,9 +26,17 @@ const LinkSchema = new mongoose.Schema({
     },
     tags: {
         type: [String]
+    },
+    groupID: {
+        // type: { type: mongoose.ObjectId, ref: "Group" }
+        type: String,
+        required: [true, "Each link must belong to a group"]
+    },
+    owner: {
+        type: String,
+        required: [true, "Each link must have an owner"]
     }
 })
 
-const LinkModel = mongoose.model("Link", LinkSchema)
 
-export default LinkModel
+export default mongoose.models.Link || mongoose.model("Link", LinkSchema)
