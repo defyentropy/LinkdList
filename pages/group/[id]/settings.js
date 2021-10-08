@@ -1,124 +1,188 @@
 import Link from "next/link";
 import Head from "next/head";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
+import { useRouter } from "next/router";
 import dbConnect from "lib/dbConnect";
 import Group from "models/Group";
-import { getSession } from "@auth0/nextjs-auth0";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
+import FormField from "components/FormField";
 import * as Yup from "yup";
+import ErrorCard from "components/ErrorCard";
+import axios from "axios";
+import BackIcon from "icons/BackIcon";
 
 const Settings = ({ groupDetails: group, error }) => {
+  if (error) {
+    return <ErrorCard />;
+  }
 
-    if (error) {
-        return (
-            <>
-                <Head>
-                    <title>Error | CrowdStudy</title>
-                </Head>
+  const router = useRouter();
 
-                <h1 className="text-center font-medium my-4 text-4xl">
-                    Whoops! It looks like you can't access this group right now.
-                </h1>
+  const updateGroup = async (values) => {
+    const res = await axios.put(`/api/group/${group._id}`, values);
 
-                <p>This could be because it is:</p>
-
-                <ul>
-                    <li>Private</li>
-                    <li>Non-existent</li>
-                    <li>Just down at the moment</li>
-                </ul>
-
-                <p className="text-center my-3">
-                    Go back to your <NextLink href="/dashboard"><a className="text-blue-500 underline">dashboard</a></NextLink>.
-                </p>
-            </>
-        )
+    if (res.data.error) {
+      console.log(res.data.error);
+    } else {
+      router.push(`/group/${group._id}`);
     }
+  };
 
-    return (
-        <>
-            <div className="bg-blue-500 w-full h-40 bg-opacity-75 flex justify-center items-center relative">
+  const deleteGroup = async (values) => {
+    const res = await axios.delete(`/api/group/${group._id}`);
 
-                <Link href={`/group/${group._id}`}>
-                    <a className="absolute top-4 left-4"> {"< Back"} </a>
-                </Link>
+    if (res.data.error) {
+      console.log(res.data.error);
+    } else {
+      router.push(`/dashboard`);
+    }
+  };
 
-                <h1 className="text-white text-4xl font-bold">
-                    <span className="italic">Settings for </span>
-                    {group.name}
-                </h1>
-            </div>
+  return (
+    <>
+      <Head>
+        <title>Settings for {group.name} | CrowdStudy</title>
+      </Head>
 
+      <div className="w-full h-48 mb-8 flex justify-center items-center relative bg-gradient-to-tr from-green-400 to-blue-500">
+        <Link href={`/group/${group._id}`}>
+          <a className="absolute top-4 left-4">
+            <BackIcon />
+          </a>
+        </Link>
 
-            <div className="flex flex-col items-center">
-                <h2 className="text-blue-500 text-4xl font-medium">Group details</h2>
+        <h1 className="text-white text-4xl font-bold">
+          <span className="italic">Settings for </span>
+          {group.name}
+        </h1>
+      </div>
 
-                <Formik
-                    initialValues={{
-                        groupName: group.name,
-                        groupDesc: group.description
-                    }}
+      <div>
+        <Formik
+          initialValues={{
+            groupName: group.name,
+            groupDesc: group.description,
+          }}
+          validationSchema={Yup.object({
+            groupName: Yup.string()
+              .max(20, "Must be 20 characters or less")
+              .required("Required"),
+            groupDesc: Yup.string()
+              .max(100, "Must be 100 characters or less")
+              .required("Required"),
+          })}
+          onSubmit={(values) => updateGroup(values)}
+        >
+          <Form
+            autoComplete="off"
+            className="p-5 flex flex-col mx-auto max-w-md shadow-lg border-t-4 border-green-400 mb-16"
+          >
+            <h2 className="text-green-500 text-4xl font-medium mb-4 text-center">
+              Group details
+            </h2>
 
-                    validationSchema={Yup.object({
-                        groupName: Yup.string()
-                            .max(20, "Must be 20 characters or less")
-                            .required("Required"),
-                        groupDesc: Yup.string()
-                            .max(100, "Must be 100 characters or less")
-                            .required("Required")
-                    })}
-                >
-                    <Form autoComplete="off">
-                        <label htmlFor="groupName" className="sr-only">Name</label>
-                        <Field
-                            name="groupName"
-                            className="mt-3 mb-1 lg:w-72 w-60 h-14 border border-blue-500 rounded p-4 focus:outline-none focus:ring focus:ring-blue-600 focus:ring-offset-2"
-                        />
-                        <p className="text-red-500 text-sm h-5 font-medium"><ErrorMessage name="groupName" /></p>
+            <FormField fieldName="groupName" desc="Group name" />
+            <FormField fieldName="groupDesc" desc="Group description" />
+            <button
+              type="submit"
+              className="py-2 px-4 bg-green-400 shadow-md hover:shadow-lg transition text-white font-medium mb-6"
+            >
+              Update
+            </button>
+          </Form>
+        </Formik>
+      </div>
 
-                        <label htmlFor="groupDesc" className="sr-only">Group description</label>
+      <div>
+        <Formik
+          initialValues={{
+            nameCheck: "",
+          }}
+          validationSchema={Yup.object({
+            nameCheck: Yup.string()
+              .oneOf([group.name], "Incorrect name")
+              .required("Please type in the name of this group"),
+          })}
+          onSubmit={deleteGroup}
+        >
+          <Form
+            autoComplete="off"
+            className="p-5 flex flex-col mx-auto max-w-md shadow-lg border-t-4 border-red-500 mb-16"
+          >
+            <h2 className="text-red-500 text-4xl font-medium mb-4 text-center">
+              Delete group
+            </h2>
+            <p className="mb-4">
+              WARNING: Deleting a group means that you will permananently lose
+              access to it. Recovering a group is not possible. All the links
+              within this group will also be deleted permanently.
+            </p>
+            <p className="mb-4">
+              To delete this group, please type in the name of the group below
+              and then press "DELETE".
+            </p>
 
-                        <Field
-                            name="groupDesc"
-                            className="mt-3 mb-1 lg:w-72 w-60 h-14 border border-blue-500 rounded p-4 focus:outline-none focus:ring focus:ring-blue-600 focus:ring-offset-2"
-                        />
-                        <p className="text-red-500 text-sm h-5 font-medium"><ErrorMessage name="groupDesc" /></p>
-                    </Form>
-                </Formik>
-            </div>
-
-        </>
-    )
-
-}
+            <FormField fieldName="nameCheck" desc="Type in the group name" />
+            <button
+              className="py-2 px-4 bg-red-500 shadow-md hover:shadow-lg transition text-white font-medium mb-6"
+              type="submit"
+            >
+              DELETE
+            </button>
+          </Form>
+        </Formik>
+      </div>
+    </>
+  );
+};
 
 export const getServerSideProps = withPageAuthRequired({
-    async getServerSideProps(context) {
+  async getServerSideProps(context) {
+    const user = getSession(context.req, context.res).user;
+    const { id: groupId } = context.params;
+    let error = null;
+    let groupDetails = null;
 
-        const user = getSession(context.req, context.res).user;
-        const { id: groupId } = context.params;
-        let error = null;
-        let groupDetails = null;
+    try {
+      await dbConnect();
+      groupDetails = await Group.findById(groupId);
+      groupDetails = JSON.parse(JSON.stringify(groupDetails));
 
-        try {
-            await dbConnect();
-            groupDetails = await Group.findById(groupId);
-            groupDetails = JSON.parse(JSON.stringify(groupDetails));
-        } catch (err) {
-            error = JSON.parse(JSON.stringify(err))
-        }
-
-        if (!groupDetails || !groupDetails.participants.includes(user.email)) {
-            error = "NO_ACCESS";
-        }
-
+      if (!groupDetails) {
         return {
-            props: {
-                groupDetails,
-                error
-            }
-        }
+          props: {
+            groupDetails: null,
+            links: null,
+            error: "GROUP_DOESNT_EXIST",
+          },
+        };
+      }
+
+      if (groupDetails.owner !== user.email) {
+        return {
+          props: {
+            groupDetails: null,
+            error: "ACCESS_DENIED",
+          },
+        };
+      }
+    } catch (err) {
+      error = JSON.parse(JSON.stringify(err));
+      return {
+        props: {
+          groupDetails: null,
+          error: error,
+        },
+      };
     }
-})
+
+    return {
+      props: {
+        groupDetails,
+        error,
+      },
+    };
+  },
+});
 
 export default Settings;

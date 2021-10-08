@@ -1,5 +1,5 @@
-import { UserProvider } from '@auth0/nextjs-auth0';
-import Layout from 'components/Layout'
+import { UserProvider } from "@auth0/nextjs-auth0";
+import Layout from "components/Layout";
 import "tailwindcss/tailwind.css";
 
 function MyApp({ Component, pageProps }) {
@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
     </UserProvider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;
