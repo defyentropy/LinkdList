@@ -3,6 +3,9 @@ import DeleteIcon from "icons/DeleteIcon";
 import FlightIcon from "icons/FlightIcon";
 import EditIcon from "icons/EditIcon";
 
+/**
+ * Card component to display the details of a link and actions related to it
+ */
 const LinkCard = ({ link, delete: deleteLink }) => {
   return (
     <div
@@ -48,11 +51,13 @@ const LinkCard = ({ link, delete: deleteLink }) => {
           </a>
         </NextLink>
 
-        <NextLink href={link.hyperlink}>
-          <a className="ml-auto px-3 py-2 w-24 rounded flex items-center justify-evenly transition bg-green-500 hover:bg-green-600 font-medium text-white">
-            <FlightIcon /> Visit
-          </a>
-        </NextLink>
+        <a
+          href={link.hyperlink}
+          target="_blank"
+          className="ml-auto px-3 py-2 w-24 rounded flex items-center justify-evenly transition bg-green-500 hover:bg-green-600 font-medium text-white"
+        >
+          <FlightIcon /> Visit
+        </a>
       </div>
     </div>
   );

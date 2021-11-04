@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema for a link
 const LinkSchema = new mongoose.Schema({
   title: {
     type: String,

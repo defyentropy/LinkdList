@@ -3,57 +3,54 @@ import dbConnect from "lib/dbConnect";
 import { getSession } from "@auth0/nextjs-auth0";
 import { tagsToArray } from "lib/tags";
 
+// API enpoint to allow users to upadte and delete links
 const handler = async (req, res) => {
   const user = getSession(req, res).user;
   const { id: linkId } = req.query;
   let linkDetails;
 
-  // Connect to database and fetch original data for this link
   try {
     await dbConnect();
     linkDetails = await Link.findById(linkId);
 
+    // If the link does not exist, send an error and halt the handler
     if (!linkDetails) {
       res.status(401).json({
-        data: null,
         error: "LINK_DOESNT_EXIST",
       });
       return;
     }
 
+    // If the user requesting the data does not own the link, send an error and halt the handler
     if (linkDetails.owner !== user.email) {
       res.status(401).json({
-        data: null,
         error: "ACCESS_DENIED",
       });
       return;
     }
   } catch (err) {
     res.status(403).json({
-      data: null,
       error: err,
     });
     return;
   }
 
   switch (req.method) {
+    // Allow users to delete links
     case "DELETE":
       try {
         await Link.findByIdAndDelete(linkId);
         res.status(200).json({
-          data: {
-            message: "DELETED",
-          },
-          error: null,
+          message: "DELETED",
         });
       } catch (err) {
         res.status(403).json({
-          data: null,
           error: err,
         });
       }
       break;
 
+    // Allow users to update links
     case "PUT":
       try {
         if (req.body?.tags) {
@@ -74,22 +71,19 @@ const handler = async (req, res) => {
         await Link.findByIdAndUpdate(linkId, linkUpdate);
 
         res.status(200).json({
-          data: {
-            message: "UPDATED",
-          },
+          message: "UPDATED",
         });
       } catch (err) {
         res.status(403).json({
-          data: null,
           error: err,
         });
       }
       break;
 
+    // If the request was not a PUT or DELETE request, send an error
     default:
       res.setHeader("Allow", ["DELETE", "PUT"]);
       res.status(400).json({
-        data: null,
         error: `Method ${req.method} not allowed`,
       });
   }

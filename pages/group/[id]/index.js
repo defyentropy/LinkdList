@@ -33,8 +33,8 @@ const GroupView = ({ groupDetails: group, links: linkList, error }) => {
         console.log(updatedGroup.data.error);
       } else {
         setFilterQuery("");
-        setLinks(updatedGroup.data.data.links);
-        setLinksSource(updatedGroup.data.data.links);
+        setLinks(updatedGroup.data.links);
+        setLinksSource(updatedGroup.data.links);
       }
     }
   };
@@ -52,7 +52,7 @@ const GroupView = ({ groupDetails: group, links: linkList, error }) => {
   return (
     <>
       <Head>
-        <title>{group.name} | CrowdStudy</title>
+        <title>{group.name} | Linkdlist</title>
       </Head>
 
       <div className="w-full h-60 flex justify-center items-center relative bg-gradient-to-tr from-green-400 to-blue-500">
@@ -107,7 +107,7 @@ const GroupView = ({ groupDetails: group, links: linkList, error }) => {
       <NextLink
         href={`/create/link?grpId=${group["_id"]}&grpName=${group["name"]}`}
       >
-        <a className="text-3xl p-3 flex items-center justify-center fixed bottom-6 right-6 sm:bottom-12 sm:right-12 w-12 h-12 hover:shadow-lg shadow-md transition text-white font-medium rounded-full bg-gradient-to-r from-green-400 to-blue-500">
+        <a className="text-3xl p-3 flex items-center justify-center fixed bottom-6 right-6 sm:bottom-12 sm:right-12 w-12 h-12 hover:shadow-lg shadow-md hover:bg-green-600 transition text-white font-medium rounded-full bg-green-500">
           <AddIcon />
         </a>
       </NextLink>
@@ -164,7 +164,7 @@ export const getServerSideProps = withPageAuthRequired({
         groupID: { $in: [groupDetails["_id"]] },
       });
 
-      links = JSON.parse(JSON.stringify(links));
+      links = JSON.parse(JSON.stringify(links)).reverse();
     } catch (err) {
       error = JSON.parse(JSON.stringify(err));
     }

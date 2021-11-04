@@ -28,7 +28,7 @@ const Settings = ({ groupDetails: group, error }) => {
     }
   };
 
-  const deleteGroup = async (values) => {
+  const deleteGroup = async () => {
     const res = await axios.delete(`/api/group/${group._id}`);
 
     if (res.data.error) {
@@ -41,7 +41,7 @@ const Settings = ({ groupDetails: group, error }) => {
   return (
     <>
       <Head>
-        <title>Settings for {group.name} | CrowdStudy</title>
+        <title>{group.name} Group Settings | LinkdList</title>
       </Head>
 
       <div className="w-full h-48 mb-8 flex justify-center items-center relative bg-gradient-to-tr from-green-400 to-blue-500">

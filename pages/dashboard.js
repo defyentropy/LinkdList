@@ -10,16 +10,16 @@ const Dashboard = ({ groups: groupList, error }) => {
   return (
     <>
       <Head>
-        <title>Home | CrowdStudy</title>
+        <title>Home | LinkdList</title>
       </Head>
 
-      <h1 className="text-3xl my-2 font-medium font-sans text-center">
-        Your Groups
+      <h1 className="text-3xl my-2 font-medium font-sans text-center text-green-500">
+        Your Lists
       </h1>
 
       <div className="mb-16 p-4 justify-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {error ? (
-          <p>Error loading groups... {JSON.stringify(error)}</p>
+          <p>Error loading lists... {JSON.stringify(error)}</p>
         ) : (
           groupList.map((group) => {
             return <GroupCard group={group} />;
@@ -28,7 +28,7 @@ const Dashboard = ({ groups: groupList, error }) => {
       </div>
 
       <Link href="/create/group">
-        <a className="p-3 flex items-center justify-center fixed bottom-6 right-6 lg:bottom-12 lg:right-12 hover:shadow-lg shadow-md transition rounded-full bg-gradient-to-r from-green-400 to-blue-500">
+        <a className="p-3 flex items-center justify-center fixed bottom-6 right-6 lg:bottom-12 lg:right-12 hover:shadow-lg hover:bg-green-600 shadow-md transition rounded-full bg-green-500">
           <AddIcon />
         </a>
       </Link>

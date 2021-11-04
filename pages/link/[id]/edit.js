@@ -2,6 +2,7 @@ import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
+import Head from "next/head";
 import axios from "axios";
 import * as Yup from "yup";
 import FormField from "components/FormField";
@@ -30,6 +31,10 @@ const ResourceForm = ({ linkData, error }) => {
 
   return (
     <>
+      <Head>
+        <title>Edit | LinkdList</title>
+      </Head>
+
       <h1 className="text-4xl mt-6 mb-6 font-medium text-center">
         Edit "{linkData.title}"
       </h1>

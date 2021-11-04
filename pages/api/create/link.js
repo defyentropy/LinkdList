@@ -3,13 +3,18 @@ import Link from "models/Link";
 import { getSession } from "@auth0/nextjs-auth0";
 import { tagsToArray } from "lib/tags";
 
+// API endpoint to allow a user to create a new resource
 const handler = async (req, res) => {
   switch (req.method) {
     case "POST":
       const user = getSession(req, res).user;
 
       let linkData = req.body;
+
+      // Assign link owner on backend so users can't create links in others' account
       linkData.owner = user.email;
+
+      // Convert tags to an array for storage in DB
       if (linkData?.tags) {
         linkData.tags = tagsToArray(linkData.tags);
       }
@@ -20,21 +25,20 @@ const handler = async (req, res) => {
 
         await newLink.save((err, response) => {
           if (err) {
-            res.status(400).json({ data: null, error: err });
+            res.status(400).json({ error: err });
           } else {
-            res.status(200).json({ data: response, error: null });
+            res.status(200).json({ message: response });
           }
         });
       } catch (err) {
-        res.status(400).json({ data: null, error: err });
+        res.status(400).json({ error: err });
       }
       break;
 
+    // If the request is not a POST request, send an error
     default:
       res.setHeader("Allow", ["POST"]);
-      res
-        .status(403)
-        .json({ data: null, error: `Method ${req.method} not allowed` });
+      res.status(403).json({ error: `Method ${req.method} not allowed` });
   }
 };
 

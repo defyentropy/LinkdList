@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema for a link
 const GroupSchema = new mongoose.Schema({
   name: {
     type: String,

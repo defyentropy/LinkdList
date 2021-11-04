@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
 import FormField from "components/FormField";
+import Head from "next/head";
 
 const GroupForm = () => {
   const router = useRouter();
@@ -12,8 +13,8 @@ const GroupForm = () => {
   const addGroup = async (values) => {
     const res = await axios.post("/api/create/group", values);
 
-    if (res.error) {
-      console.log(res.error);
+    if (res.data.error) {
+      console.log(res.data.error);
     } else {
       router.push("/dashboard");
     }
@@ -21,7 +22,11 @@ const GroupForm = () => {
 
   return (
     <>
-      <h1 className="text-4xl lg:w-full w-60 mt-6 mb-12 font-medium text-center">
+      <Head>
+        <title>Create a group | LinkdList</title>
+      </Head>
+
+      <h1 className="text-4xl w-60 md:w-screen mx-auto mt-6 mb-4 font-medium text-center text-green-500">
         Create a new group
       </h1>
 
@@ -37,26 +42,28 @@ const GroupForm = () => {
         })}
         onSubmit={addGroup}
       >
-        <Form
-          className="p-5 flex flex-col mx-auto max-w-sm shadow-lg border-t-4 border-green-400 mb-16"
-          autoComplete="off"
-        >
-          <FormField fieldName="name" desc="Group name" />
-          <FormField fieldName="description" desc="Group description" />
-
-          <button
-            className="py-2 px-4 bg-green-400 shadow-md hover:shadow-lg transition text-white font-medium mb-6"
-            type="submit"
+        <div className="p-4 m-0 w-screen flex items-center justify-center">
+          <Form
+            className="p-5 flex-1 flex flex-col mx-auto max-w-sm shadow-lg border-t-4 border-green-400 mb-16"
+            autoComplete="off"
           >
-            Add group
-          </button>
+            <FormField fieldName="name" desc="Group name" />
+            <FormField fieldName="description" desc="Group description" />
 
-          <Link href="/dashboard">
-            <a className="text-green-400 hover:underline font-medium text-center text-sm">
-              Cancel
-            </a>
-          </Link>
-        </Form>
+            <button
+              className="py-2 px-4 bg-green-400 shadow-md hover:shadow-lg transition text-white font-medium mb-6"
+              type="submit"
+            >
+              Add group
+            </button>
+
+            <Link href="/dashboard">
+              <a className="text-green-400 hover:underline font-medium text-center text-sm">
+                Cancel
+              </a>
+            </Link>
+          </Form>
+        </div>
       </Formik>
     </>
   );
