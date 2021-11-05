@@ -1,7 +1,7 @@
 import dbConnect from "lib/dbConnect";
 import Group from "models/Group";
 import Link from "models/Link";
-import { getSession } from "@auth0/nextjs-auth0";
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 
 // API endpoint to allow users to fetch, update, and delete a specific group
 const handler = async (req, res) => {
@@ -111,4 +111,4 @@ const handler = async (req, res) => {
   }
 };
 
-export default handler;
+export default withApiAuthRequired(handler);

@@ -6,15 +6,22 @@ import axios from "axios";
 import * as Yup from "yup";
 import FormField from "components/FormField";
 import Head from "next/head";
+import { useState } from "react";
+import ErrorAlert from "components/ErrorAlert";
 
 const ResourceForm = ({ q }) => {
   const router = useRouter();
+
+  const [error, setError] = useState();
 
   const addLink = async (values) => {
     const res = await axios.post("/api/create/link", values);
 
     if (res.data.error) {
-      console.log(res.data.error);
+      setError("An error occurred. Please try again later.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     } else {
       router.push(`/group/${q.grpId}`);
     }
@@ -65,8 +72,8 @@ const ResourceForm = ({ q }) => {
             className="p-4 flex-1 flex flex-col max-w-sm shadow-lg border-t-4 border-green-400 mb-16"
             autoComplete="off"
           >
-            <FormField fieldName="title" desc="Link title" />
-            <FormField fieldName="hyperlink" desc="Hyperlink" />
+            <FormField fieldName="title" desc="Link title" color="green" />
+            <FormField fieldName="hyperlink" desc="Hyperlink" color="green" />
 
             <div>
               <label className="sr-only" htmlFor="description">
@@ -83,7 +90,11 @@ const ResourceForm = ({ q }) => {
               </p>
             </div>
 
-            <FormField fieldName="creator" desc="Resource creator" />
+            <FormField
+              fieldName="creator"
+              desc="Resource creator"
+              color="green"
+            />
 
             <div className="flex mb-8">
               <label className="flex items-center mr-4">
@@ -111,7 +122,11 @@ const ResourceForm = ({ q }) => {
               </p>
             </div>
 
-            <FormField fieldName="tags" desc="Comma-separated tags" />
+            <FormField
+              fieldName="tags"
+              desc="Comma-separated tags"
+              color="green"
+            />
 
             <div className="hidden">
               <Field name="grp" type="text" />
@@ -132,6 +147,8 @@ const ResourceForm = ({ q }) => {
           </Form>
         </div>
       </Formik>
+
+      <ErrorAlert error={error} />
     </>
   );
 };

@@ -1,6 +1,6 @@
 import dbConnect from "lib/dbConnect";
 import Link from "models/Link";
-import { getSession } from "@auth0/nextjs-auth0";
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { tagsToArray } from "lib/tags";
 
 // API endpoint to allow a user to create a new resource
@@ -42,4 +42,4 @@ const handler = async (req, res) => {
   }
 };
 
-export default handler;
+export default withApiAuthRequired(handler);

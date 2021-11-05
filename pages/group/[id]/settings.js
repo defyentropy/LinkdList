@@ -10,19 +10,25 @@ import * as Yup from "yup";
 import ErrorCard from "components/ErrorCard";
 import axios from "axios";
 import BackIcon from "icons/BackIcon";
+import { useState } from "react";
+import ErrorAlert from "components/ErrorAlert";
 
-const Settings = ({ groupDetails: group, error }) => {
-  if (error) {
+const Settings = ({ groupDetails: group, error: GSSPError }) => {
+  if (GSSPError) {
     return <ErrorCard />;
   }
 
   const router = useRouter();
+  const [error, setError] = useState("");
 
   const updateGroup = async (values) => {
     const res = await axios.put(`/api/group/${group._id}`, values);
 
     if (res.data.error) {
-      console.log(res.data.error);
+      setError("An error occurred. Please try again later.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     } else {
       router.push(`/group/${group._id}`);
     }
@@ -51,9 +57,10 @@ const Settings = ({ groupDetails: group, error }) => {
           </a>
         </Link>
 
-        <h1 className="text-white text-4xl font-bold">
-          <span className="italic">Settings for </span>
-          {group.name}
+        <h1 className="text-white text-4xl text-center flex flex-col">
+          <span className="text-sm inline-block">Settings for</span>
+          {""}
+          <span className="font-bold inline-block">{group.name}</span>
         </h1>
       </div>
 
@@ -73,23 +80,33 @@ const Settings = ({ groupDetails: group, error }) => {
           })}
           onSubmit={(values) => updateGroup(values)}
         >
-          <Form
-            autoComplete="off"
-            className="p-5 flex flex-col mx-auto max-w-md shadow-lg border-t-4 border-green-400 mb-16"
-          >
-            <h2 className="text-green-500 text-4xl font-medium mb-4 text-center">
-              Group details
-            </h2>
-
-            <FormField fieldName="groupName" desc="Group name" />
-            <FormField fieldName="groupDesc" desc="Group description" />
-            <button
-              type="submit"
-              className="py-2 px-4 bg-green-400 shadow-md hover:shadow-lg transition text-white font-medium mb-6"
+          <div className="p-4 m-0 w-screen flex items-center justify-center">
+            <Form
+              autoComplete="off"
+              className="p-5 flex-1 flex flex-col mx-auto max-w-sm shadow-lg border-t-4 border-green-400 mb-16"
             >
-              Update
-            </button>
-          </Form>
+              <h2 className="text-green-500 text-4xl font-medium mb-4 text-center">
+                Group details
+              </h2>
+
+              <FormField
+                fieldName="groupName"
+                desc="Group name"
+                color="green"
+              />
+              <FormField
+                fieldName="groupDesc"
+                desc="Group description"
+                color="green"
+              />
+              <button
+                type="submit"
+                className="py-2 px-4 bg-green-400 shadow-md hover:shadow-lg transition text-white font-medium mb-6"
+              >
+                Update
+              </button>
+            </Form>
+          </div>
         </Formik>
       </div>
 
@@ -105,33 +122,41 @@ const Settings = ({ groupDetails: group, error }) => {
           })}
           onSubmit={deleteGroup}
         >
-          <Form
-            autoComplete="off"
-            className="p-5 flex flex-col mx-auto max-w-md shadow-lg border-t-4 border-red-500 mb-16"
-          >
-            <h2 className="text-red-500 text-4xl font-medium mb-4 text-center">
-              Delete group
-            </h2>
-            <p className="mb-4">
-              WARNING: Deleting a group means that you will permananently lose
-              access to it. Recovering a group is not possible. All the links
-              within this group will also be deleted permanently.
-            </p>
-            <p className="mb-4">
-              To delete this group, please type in the name of the group below
-              and then press "DELETE".
-            </p>
-
-            <FormField fieldName="nameCheck" desc="Type in the group name" />
-            <button
-              className="py-2 px-4 bg-red-500 shadow-md hover:shadow-lg transition text-white font-medium mb-6"
-              type="submit"
+          <div className="p-4 m-0 w-screen flex items-center justify-center">
+            <Form
+              autoComplete="off"
+              className="p-5 flex-1 flex flex-col mx-auto max-w-sm shadow-lg border-t-4 border-red-500 mb-16"
             >
-              DELETE
-            </button>
-          </Form>
+              <h2 className="text-red-500 text-4xl font-medium mb-4 text-center">
+                Delete group
+              </h2>
+              <p className="mb-4">
+                WARNING: Deleting a group means that you will permananently lose
+                access to it. Recovering a group is not possible. All the links
+                within this group will also be deleted permanently.
+              </p>
+              <p className="mb-4">
+                To delete this group, please type in the name of the group below
+                and then press "DELETE".
+              </p>
+
+              <FormField
+                fieldName="nameCheck"
+                desc="Type in the group name"
+                color="red"
+              />
+              <button
+                className="py-2 px-4 bg-red-500 shadow-md hover:shadow-lg transition text-white font-medium mb-6"
+                type="submit"
+              >
+                DELETE
+              </button>
+            </Form>
+          </div>
         </Formik>
       </div>
+
+      <ErrorAlert error={error} />
     </>
   );
 };

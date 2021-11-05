@@ -10,20 +10,26 @@ import Link from "models/Link";
 import dbConnect from "lib/dbConnect";
 import ErrorCard from "components/ErrorCard";
 import { tagsToString } from "lib/tags";
+import { useState } from "react";
+import ErrorAlert from "components/ErrorAlert";
 
-const ResourceForm = ({ linkData, error }) => {
-  if (error) {
+const ResourceForm = ({ linkData, error: GSSPError }) => {
+  if (GSSPError) {
     return <ErrorCard />;
   }
 
   const router = useRouter();
+  const [error, setError] = useState("");
 
   const editLink = async (values) => {
     console.log("update started");
     const res = await axios.put(`/api/link/${linkData._id}`, values);
 
     if (res.data.error) {
-      console.log(error);
+      setError("An error occurred. Please try again later.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     } else {
       router.push(`/group/${linkData.groupID}`);
     }
@@ -136,6 +142,8 @@ const ResourceForm = ({ linkData, error }) => {
           </NextLink>
         </Form>
       </Formik>
+
+      <ErrorAlert error={error} />
     </>
   );
 };

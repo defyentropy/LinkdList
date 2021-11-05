@@ -11,21 +11,30 @@ import AddIcon from "icons/AddIcon";
 import SettingsIcon from "icons/SettingsIcon";
 import BackIcon from "icons/BackIcon";
 import ErrorCard from "components/ErrorCard";
+import ErrorAlert from "components/ErrorAlert";
 
-const GroupView = ({ groupDetails: group, links: linkList, error }) => {
-  if (error) {
+const GroupView = ({
+  groupDetails: group,
+  links: linkList,
+  error: GSSPError,
+}) => {
+  if (GSSPError) {
     return <ErrorCard />;
   }
 
   const [linksSource, setLinksSource] = useState(linkList);
   const [links, setLinks] = useState(linkList);
   const [filterQuery, setFilterQuery] = useState("");
+  const [error, setError] = useState("");
 
   const deleteLink = async (id) => {
     const res = await axios.delete(`/api/link/${id}`);
 
     if (res.data.error) {
-      console.log(res.data.error);
+      setError("An error has occurred. Please try again later.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     } else {
       const updatedGroup = await axios.get(`/api/group/${group["_id"]}`);
 
@@ -52,10 +61,10 @@ const GroupView = ({ groupDetails: group, links: linkList, error }) => {
   return (
     <>
       <Head>
-        <title>{group.name} | Linkdlist</title>
+        <title>{group.name} | LinkdList</title>
       </Head>
 
-      <div className="w-full h-60 flex justify-center items-center relative bg-gradient-to-tr from-green-400 to-blue-500">
+      <div className="w-full h-60 flex flex-col justify-center items-center relative bg-gradient-to-tr from-green-400 to-blue-500">
         <NextLink href={`/group/${group._id}/settings`}>
           <a className="absolute top-4 right-4">
             <SettingsIcon />
@@ -68,7 +77,8 @@ const GroupView = ({ groupDetails: group, links: linkList, error }) => {
           </a>
         </NextLink>
 
-        <h1 className="text-white text-6xl font-bold">{group.name}</h1>
+        <h1 className="text-white text-6xl font-bold mb-4">{group.name}</h1>
+        <p className="text-white text-center">{group.description}</p>
       </div>
 
       <div className="p-4 mt-4 flex justify-center">
@@ -99,7 +109,7 @@ const GroupView = ({ groupDetails: group, links: linkList, error }) => {
           links.map((link) => <LinkCard link={link} delete={deleteLink} />)
         ) : (
           <p className="col-span-full font-bold text-gray-400">
-            No links found
+            No links found. Click the green + at the bottom right to make one!
           </p>
         )}
       </div>
@@ -111,6 +121,8 @@ const GroupView = ({ groupDetails: group, links: linkList, error }) => {
           <AddIcon />
         </a>
       </NextLink>
+
+      <ErrorAlert error={error} />
     </>
   );
 };

@@ -5,8 +5,13 @@ import Group from "models/Group";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import GroupCard from "components/GroupCard";
 import AddIcon from "icons/AddIcon";
+import ErrorCard from "components/ErrorCard";
 
-const Dashboard = ({ groups: groupList, error }) => {
+const Dashboard = ({ groups: groupList, error: GSSPError }) => {
+  if (GSSPError) {
+    return <ErrorCard />;
+  }
+
   return (
     <>
       <Head>
@@ -18,12 +23,14 @@ const Dashboard = ({ groups: groupList, error }) => {
       </h1>
 
       <div className="mb-16 p-4 justify-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-        {error ? (
-          <p>Error loading lists... {JSON.stringify(error)}</p>
-        ) : (
+        {groupList.length !== 0 ? (
           groupList.map((group) => {
             return <GroupCard group={group} />;
           })
+        ) : (
+          <p className="col-span-full font-bold text-gray-400">
+            No lists found. Click the green + at the bottom to make one!
+          </p>
         )}
       </div>
 
@@ -52,7 +59,7 @@ export const getServerSideProps = withPageAuthRequired({
       await dbConnect();
 
       groups = await Group.find({
-        participants: { $in: [user.name] },
+        owner: user.email,
       });
 
       groups = JSON.parse(JSON.stringify(groups));

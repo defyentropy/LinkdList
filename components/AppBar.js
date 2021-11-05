@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useUser } from "@auth0/nextjs-auth0";
 
 /**
@@ -33,11 +34,13 @@ const AppBar = () => {
         ) : (
           <>
             <Link href="/account">
-              <a className="mx-4">
-                <img
+              <a className="mx-4 flex items-center">
+                <Image
                   src={user.picture}
-                  alt={user.name}
-                  className="w-9 h-9 rounded-full"
+                  width="36px"
+                  height="36px"
+                  alt="Profile Picture"
+                  className="rounded-full"
                 />
               </a>
             </Link>

@@ -1,6 +1,6 @@
 import Link from "models/Link";
 import dbConnect from "lib/dbConnect";
-import { getSession } from "@auth0/nextjs-auth0";
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { tagsToArray } from "lib/tags";
 
 // API enpoint to allow users to upadte and delete links
@@ -89,4 +89,4 @@ const handler = async (req, res) => {
   }
 };
 
-export default handler;
+export default withApiAuthRequired(handler);

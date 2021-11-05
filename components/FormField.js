@@ -14,7 +14,7 @@ const FormField = (props) => {
         name={props.fieldName}
         type="text"
         placeholder={props.desc}
-        className="block w-full p-3 bg-gray-100 rounded-t border-b-2 border-gray-100 focus:border-green-400 focus:outline-none"
+        className={`block w-full p-3 bg-gray-100 rounded-t border-b-2 border-gray-100 focus:border-${props.color}-400 focus:outline-none`}
       />
       <p className="block text-red-500 font-medium text-sm h-8">
         <ErrorMessage name={props.fieldName} />

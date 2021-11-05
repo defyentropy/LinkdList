@@ -6,15 +6,22 @@ import axios from "axios";
 import Link from "next/link";
 import FormField from "components/FormField";
 import Head from "next/head";
+import ErrorAlert from "components/ErrorAlert";
+import { useState } from "react";
 
 const GroupForm = () => {
   const router = useRouter();
+
+  const [error, setError] = useState("");
 
   const addGroup = async (values) => {
     const res = await axios.post("/api/create/group", values);
 
     if (res.data.error) {
-      console.log(res.data.error);
+      setError("An error occurred. Please try again later.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     } else {
       router.push("/dashboard");
     }
@@ -47,8 +54,12 @@ const GroupForm = () => {
             className="p-5 flex-1 flex flex-col mx-auto max-w-sm shadow-lg border-t-4 border-green-400 mb-16"
             autoComplete="off"
           >
-            <FormField fieldName="name" desc="Group name" />
-            <FormField fieldName="description" desc="Group description" />
+            <FormField fieldName="name" desc="Group name" color="green" />
+            <FormField
+              fieldName="description"
+              desc="Group description"
+              color="green"
+            />
 
             <button
               className="py-2 px-4 bg-green-400 shadow-md hover:shadow-lg transition text-white font-medium mb-6"
@@ -65,6 +76,8 @@ const GroupForm = () => {
           </Form>
         </div>
       </Formik>
+
+      <ErrorAlert error={error} />
     </>
   );
 };
