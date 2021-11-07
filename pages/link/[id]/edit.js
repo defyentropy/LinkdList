@@ -166,6 +166,15 @@ export const getServerSideProps = withPageAuthRequired({
       error = JSON.parse(JSON.stringify(err));
     }
 
+    if (!linkData) {
+      return {
+        props: {
+          linkData: null,
+          error: "LINK_DOESNT_EXIST",
+        },
+      };
+    }
+
     if (linkData.owner !== user.email) {
       linkData = null;
       error = "ACCESS_DENIED";

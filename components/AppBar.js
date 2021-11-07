@@ -17,8 +17,8 @@ const AppBar = () => {
     <nav className="z-50 sticky top-0 border-b bg-white border-gray-300-500 flex flex-row p-3 items-center justify-right">
       <Link href={logoLink}>
         <a className="text-2xl mr-auto">
-          <span className="font-medium text-gray-400">Linkd</span>
-          <span className="font-bold text-green-400">List</span>
+          <span className="text-gray-400">Linkd</span>
+          <span className="font-medium text-green-400">List</span>
         </a>
       </Link>
 

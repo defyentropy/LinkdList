@@ -14,10 +14,7 @@ const LinkSchema = new mongoose.Schema({
   },
   hyperlink: {
     type: String,
-    required: [
-      true,
-      "Breh. You do realise that the main point is to have a link?",
-    ],
+    required: [true, "Each link must have a valid hyperlink."],
   },
   type: {
     type: String,
@@ -32,7 +29,6 @@ const LinkSchema = new mongoose.Schema({
     type: [String],
   },
   groupID: {
-    // type: { type: mongoose.ObjectId, ref: "Group" }
     type: String,
     required: [true, "Each link must belong to a group"],
   },

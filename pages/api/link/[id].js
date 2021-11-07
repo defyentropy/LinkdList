@@ -15,7 +15,7 @@ const handler = async (req, res) => {
 
     // If the link does not exist, send an error and halt the handler
     if (!linkDetails) {
-      res.status(401).json({
+      res.status(200).json({
         error: "LINK_DOESNT_EXIST",
       });
       return;
@@ -23,13 +23,13 @@ const handler = async (req, res) => {
 
     // If the user requesting the data does not own the link, send an error and halt the handler
     if (linkDetails.owner !== user.email) {
-      res.status(401).json({
+      res.status(200).json({
         error: "ACCESS_DENIED",
       });
       return;
     }
   } catch (err) {
-    res.status(403).json({
+    res.status(200).json({
       error: err,
     });
     return;
@@ -44,7 +44,7 @@ const handler = async (req, res) => {
           message: "DELETED",
         });
       } catch (err) {
-        res.status(403).json({
+        res.status(200).json({
           error: err,
         });
       }
@@ -74,7 +74,7 @@ const handler = async (req, res) => {
           message: "UPDATED",
         });
       } catch (err) {
-        res.status(403).json({
+        res.status(200).json({
           error: err,
         });
       }
@@ -83,7 +83,7 @@ const handler = async (req, res) => {
     // If the request was not a PUT or DELETE request, send an error
     default:
       res.setHeader("Allow", ["DELETE", "PUT"]);
-      res.status(400).json({
+      res.status(403).json({
         error: `Method ${req.method} not allowed`,
       });
   }

@@ -8,10 +8,7 @@ import EditIcon from "icons/EditIcon";
  */
 const LinkCard = ({ link, delete: deleteLink }) => {
   return (
-    <div
-      key={link["_id"]}
-      className="container transition shadow-md hover:shadow-xl flex flex-col min-w-25 max-w-sm rounded border bg-white border-gray-100 my-2 overflow-hidden"
-    >
+    <div className="container transition shadow-md hover:shadow-xl flex flex-col min-w-25 max-w-sm rounded border bg-white border-gray-100 my-2 overflow-hidden">
       <div className="py-auto px-3 min-w-0 text-center">
         <h1 className="text-2xl text-blue-500 font-medium mb-1 mt-2 truncate">
           {link.title}

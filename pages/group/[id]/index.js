@@ -106,7 +106,9 @@ const GroupView = ({
 
       <div className="mb-24 p-4 justify-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {links.length !== 0 ? (
-          links.map((link) => <LinkCard link={link} delete={deleteLink} />)
+          links.map((link) => (
+            <LinkCard link={link} key={link._id} delete={deleteLink} />
+          ))
         ) : (
           <p className="col-span-full font-bold text-gray-400">
             No links found. Click the green + at the bottom right to make one!

@@ -19,13 +19,13 @@ const handler = async (req, res) => {
 
         await newGroup.save((err, response) => {
           if (err) {
-            res.status(400).json({ error: err });
+            res.status(200).json({ error: err });
           } else {
             res.status(200).json({ message: response });
           }
         });
       } catch (err) {
-        res.status(400).json({ error: err });
+        res.status(200).json({ error: err });
       }
       break;
 

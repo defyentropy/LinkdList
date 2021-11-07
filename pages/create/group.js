@@ -17,7 +17,10 @@ const GroupForm = () => {
   const addGroup = async (values) => {
     const res = await axios.post("/api/create/group", values);
 
+    console.log(res);
+
     if (res.data.error) {
+      console.log(res.data.error);
       setError("An error occurred. Please try again later.");
       setTimeout(() => {
         setError("");

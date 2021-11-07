@@ -25,7 +25,7 @@ const Dashboard = ({ groups: groupList, error: GSSPError }) => {
       <div className="mb-16 p-4 justify-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {groupList.length !== 0 ? (
           groupList.map((group) => {
-            return <GroupCard group={group} />;
+            return <GroupCard group={group} key={group._id} />;
           })
         ) : (
           <p className="col-span-full font-bold text-gray-400">

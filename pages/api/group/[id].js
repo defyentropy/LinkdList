@@ -17,7 +17,7 @@ const handler = async (req, res) => {
 
     // If the group does not exist, send an error and halt the handler
     if (!groupDetails) {
-      res.status(403).json({
+      res.status(200).json({
         error: "GROUP_DOESNT_EXIST",
       });
       return;
@@ -25,14 +25,14 @@ const handler = async (req, res) => {
 
     // If the user requesting the data does not own the group, send an error and halt the handler
     if (groupDetails.owner !== user.email) {
-      res.status(403).json({
+      res.status(200).json({
         error: "ACCESS_DENIED",
       });
       return;
     }
   } catch (err) {
     error = JSON.parse(JSON.stringify(err));
-    res.status(403).json({
+    res.status(200).json({
       error: error,
     });
     return;
@@ -74,7 +74,7 @@ const handler = async (req, res) => {
           message: "GROUP_UPDATED",
         });
       } catch (err) {
-        res.status(403).json({
+        res.status(200).json({
           error: err,
         });
       }
@@ -96,7 +96,7 @@ const handler = async (req, res) => {
           message: "GROUP_DELETED",
         });
       } catch (err) {
-        res.status(403).json({
+        res.status(200).json({
           error: err,
         });
       }
@@ -106,7 +106,7 @@ const handler = async (req, res) => {
     default:
       res
         .setHeader("Allow", ["DELETE", "PUT"])
-        .status(400)
+        .status(403)
         .json({ error: "Method not allowed" });
   }
 };
