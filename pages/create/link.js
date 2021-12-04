@@ -34,7 +34,7 @@ const ResourceForm = ({ q }) => {
       </Head>
 
       <h1 className="text-4xl mt-6 mb-2 font-medium text-center text-green-500">
-        Create a new resource
+        Create a new link
       </h1>
       <h2 className="text-2xl mt-0 mb-4 lg:mb-8 text-gray-500 font-medium text-center">
         in {q.grpName}

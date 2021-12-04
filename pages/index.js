@@ -115,41 +115,54 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="col-span-full flex flex-col justify-center h-96 sm:w-max sm:h-48 pl-5 pr-10 my-10 sm:mr-10 mr-5 border-t-2 border-r-2 border-b-2 border-green-500 rounded-r-full">
-          <h2 className="font-bold text-3xl mb-4 text-green-500">
-            Put some context into your bookmarks.
-          </h2>
-          <p className="text-md">
-            Ever made a @#%* ton of bookmarks and forgot why you ever saved them
-            in the first place?
-          </p>
-          <p className="text-md">
-            With link descriptions in LinkdList, that doesn't have to happen.
-            Write down exactly why you need that link.
-          </p>
-        </div>
+        <div className="col-span-full grid grid-cols-12 lg:col-start-2 lg:col-end-12 pt-8">
+          <div className="col-start-2 col-end-12 mb-12 grid grid-cols-12 p-2 gap-8">
+            <img
+              className="opacity-50 md:col-start-1 md:col-end-6 md:row-start-1 md:row-end-3 self-center mx-auto row-start-3 row-end-4 col-span-full"
+              src="description.svg"
+              alt="description graphic"
+            />
+            <h2 className="text-green-500 md:text-4xl md:row-span-1 md:col-start-7 md:col-end-13 self-center font-medium text-center text-3xl row-start-1 row-end-2 col-span-full">
+              Put some context into your bookmarks
+            </h2>
+            <p className="text-gray-600 text-center md:col-start-7 md:col-end-13 md:row-span-1 row-start-2 row-end-3 col-span-full">
+              Ever made a #$%$ ton of bookmarks but forgotten what they were for
+              a few weeks later? With LinkdList, add descriptions to your
+              bookmarks so you'll always know what that link is for.
+            </p>
+          </div>
 
-        <div className="col-span-full flex flex-col justify-center h-96 sm:h-48 sm:w-max pl-10 pr-5 mb-10 sm:ml-auto ml-5 border-t-2 border-l-2 border-b-2 border-green-500 rounded-l-full">
-          <h2 className="text-right font-bold text-3xl mb-4 text-green-500">
-            Find your links painlessly.
-          </h2>
-          <p className="text-md text-right">
-            Frantically looking through your bookmarks bar isn't fun.
-          </p>
-          <p className="text-md text-right">
-            Instead, tag your links in LinkdList and filter through them, so you
-            can find the link you need, when you need it.
-          </p>
-        </div>
+          <div className="col-start-2 col-end-12 grid grid-cols-12 gap-8 mb-12">
+            <h2 className="text-green-500 text-4xl font-medium text-center self-center md:col-start-1 md:col-end-6 col-span-full row-start-1 row-end-2">
+              Find your links painlessly
+            </h2>
+            <p className="text-gray-600 text-center md:col-start-1 md:col-end-6 row-start-2 row-end-3 col-span-full">
+              Frantically looking through your bookmarks bar isn't fun. Instead,
+              LinkdList allows you to search and filter your links, so you can
+              find what you need in a pinch.
+            </p>
+            <img
+              src="find.svg"
+              alt="find graphic"
+              className="opacity-50 md:col-start-7 md:col-end-13 md:row-start-1 md:row-end-3 mx-auto self-center row-start-3 row-end-4 col-span-full"
+            />
+          </div>
 
-        <div className="col-span-full flex flex-col justify-center h-96 sm:h-48 sm:w-max sm:mr-10 mr-5 pl-5 pr-10 mb-10 border-t-2 border-r-2 border-b-2 border-green-500 rounded-r-full">
-          <h2 className="font-bold text-3xl mb-4 text-green-500">
-            Organise your bookmarks beautifully.
-          </h2>
-          <p className="text-md">
-            Let's face the truth: those folders in your bookmarks bar are ugly.
-            LinkdList is not. That's all we have to say.
-          </p>
+          <div className="col-start-2 col-end-12 mb-12 grid grid-cols-12 gap-8 md:gap-0">
+            <img
+              src="nofoldertwo.svg"
+              alt="beuatiful graphic"
+              className="opacity-50 md:col-start-1 md:col-end-6 self-center md:row-start-1 md:row-end-3 mx-auto row-start-3 row-end-4 col-span-full my-3"
+            />
+            <h2 className="text-green-500 md:text-4xl text-3xl font-medium text-center md:col-start-7 md:col-end-13 self-center row-start-1 row-end-2 col-span-full">
+              Organise your links beautifully
+            </h2>
+            <p className="text-gray-600 text-center md:col-start-7 md:col-end-13 row-start-2 row-end-3 col-span-full my-2">
+              Let's face the truth: those folders in your bookmarks bar are
+              ugly. LinkdList is not. LinkdList combines a modern design and
+              color scheme with the utility you've always wanted and needed.
+            </p>
+          </div>
         </div>
       </div>
 
