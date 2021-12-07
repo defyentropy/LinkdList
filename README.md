@@ -1,6 +1,6 @@
 # LinkdList
 
-[Video Demo](https://www.youtube.com)
+[Video Demo](https://youtu.be/kw629pNTLtE)
 
 ## Description
 
@@ -28,7 +28,7 @@ I used Formik and Yup because making forms in React is very verbose, since you h
 
 - `axios` - to make sending GET, POST and PUT requests easier.
 
-For authentication, I used Auth0, since authentication is a critical but complicated part of an application and I wanted to make sure it was handled properly. Auth0 was extremely easy to set up and use, and it has a good UI for managing auth rules an users.
+For authentication, I used Auth0, since authentication is a critical but complicated part of an application and I wanted to make sure it was handled properly. Auth0 was extremely easy to set up and use, and has an intuitive UI for managing auth rules and users.
 
 For exact version numbers, check `package.json` or `package-lock.json`.
 
@@ -39,7 +39,7 @@ For exact version numbers, check `package.json` or `package-lock.json`.
 This directory contains UI elements that are often reused across different pages, to avoid code redundancy and to make it easier to edit them.
 
 1. **AppBar.js** - The NavBar at the top of every page in LinkdList. Displays the app logo and, depending on the user's login state, displays either a login button or a profile picture and logout button.
-2. **ErrorAlert.js** - A component that displays a small red snackbar-style alert when an error occurs in the backend. Takes a bit of state in from the parent page to tell it when an error has occured. If there is an error, it displays; otherwise, it is hidden.
+2. **ErrorAlert.js** - A component that displays a small red snackbar-style alert when an error occurs in the backend. Takes a bit of state in from the parent page to tell it when an error has occured. If there is an error, it displays; otherwise, it is hidden. To make this work, the API only returns 200 OK statuses, because otherwise axios throws an error and the callback is not fully executed.
 3. **ErrorCard.js** - A component that is rendered to the page whenever a user tries to access a list or edit a link that is not theirs.
 4. **FormField** - An input component whose color can be customised by passing it as a `color` prop.
 5. **GroupCard.js** - A card component to display the details of each list on the user's dashboard.
