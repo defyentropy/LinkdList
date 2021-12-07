@@ -18,14 +18,14 @@ const GroupView = ({
   links: linkList,
   error: GSSPError,
 }) => {
-  if (GSSPError) {
-    return <ErrorCard />;
-  }
-
   const [linksSource, setLinksSource] = useState(linkList);
   const [links, setLinks] = useState(linkList);
   const [filterQuery, setFilterQuery] = useState("");
   const [error, setError] = useState("");
+
+  if (GSSPError) {
+    return <ErrorCard />;
+  }
 
   const deleteLink = async (id) => {
     const res = await axios.delete(`/api/link/${id}`);

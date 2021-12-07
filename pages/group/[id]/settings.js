@@ -14,12 +14,12 @@ import { useState } from "react";
 import ErrorAlert from "components/ErrorAlert";
 
 const Settings = ({ groupDetails: group, error: GSSPError }) => {
+  const router = useRouter();
+  const [error, setError] = useState("");
+
   if (GSSPError) {
     return <ErrorCard />;
   }
-
-  const router = useRouter();
-  const [error, setError] = useState("");
 
   const updateGroup = async (values) => {
     const res = await axios.put(`/api/group/${group._id}`, values);
@@ -137,7 +137,7 @@ const Settings = ({ groupDetails: group, error: GSSPError }) => {
               </p>
               <p className="mb-4">
                 To delete this group, please type in the name of the group below
-                and then press "DELETE".
+                and then press &ldquo;DELETE&rdquo;.
               </p>
 
               <FormField

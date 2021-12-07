@@ -14,12 +14,12 @@ import { useState } from "react";
 import ErrorAlert from "components/ErrorAlert";
 
 const ResourceForm = ({ linkData, error: GSSPError }) => {
+  const router = useRouter();
+  const [error, setError] = useState("");
+
   if (GSSPError) {
     return <ErrorCard />;
   }
-
-  const router = useRouter();
-  const [error, setError] = useState("");
 
   const editLink = async (values) => {
     console.log("update started");
@@ -42,7 +42,7 @@ const ResourceForm = ({ linkData, error: GSSPError }) => {
       </Head>
 
       <h1 className="text-4xl mt-6 mb-6 font-medium text-center">
-        Edit "{linkData.title}"
+        Edit &ldquo;{linkData.title}&rdquo;
       </h1>
 
       <Formik

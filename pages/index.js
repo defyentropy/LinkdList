@@ -7,6 +7,7 @@ import Footer from "components/Footer";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
+import Image from "next/image";
 
 const MockLink = ({ link }) => {
   return (
@@ -72,7 +73,7 @@ export default function Home() {
     if (!isLoading && user && !error) {
       router.push("/dashboard");
     }
-  }, [user, isLoading, error]);
+  }, [user, isLoading, error, router]);
 
   const link = {
     title: "An example",
@@ -117,18 +118,22 @@ export default function Home() {
 
         <div className="col-span-full grid grid-cols-12 lg:col-start-2 lg:col-end-12 pt-8">
           <div className="col-start-2 col-end-12 mb-12 grid grid-cols-12 p-2 gap-8">
-            <img
-              className="opacity-50 md:col-start-1 md:col-end-6 md:row-start-1 md:row-end-3 self-center mx-auto row-start-3 row-end-4 col-span-full"
-              src="description.svg"
-              alt="description graphic"
-            />
+            <div className="relative md:col-start-1 md:col-end-6 md:row-start-1 md:row-end-3 row-start-3 row-end-4 col-span-full">
+              <Image
+                className="opacity-50"
+                src="/description.svg"
+                alt="description graphic"
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
             <h2 className="text-green-500 md:text-4xl md:row-span-1 md:col-start-7 md:col-end-13 self-center font-medium text-center text-3xl row-start-1 row-end-2 col-span-full">
-              Put some context into your bookmarks
+              Describe your links easily
             </h2>
             <p className="text-gray-600 text-center md:col-start-7 md:col-end-13 md:row-span-1 row-start-2 row-end-3 col-span-full">
               Ever made a #$%$ ton of bookmarks but forgotten what they were for
               a few weeks later? With LinkdList, add descriptions to your
-              bookmarks so you'll always know what that link is for.
+              bookmarks so you&apos;ll always know what that link is for.
             </p>
           </div>
 
@@ -137,30 +142,39 @@ export default function Home() {
               Find your links painlessly
             </h2>
             <p className="text-gray-600 text-center md:col-start-1 md:col-end-6 row-start-2 row-end-3 col-span-full">
-              Frantically looking through your bookmarks bar isn't fun. Instead,
-              LinkdList allows you to search and filter your links, so you can
-              find what you need in a pinch.
+              Frantically looking through your bookmarks bar isn&apos;t fun.
+              Instead, LinkdList allows you to search and filter your links, so
+              you can find what you need in a pinch.
             </p>
-            <img
-              src="find.svg"
-              alt="find graphic"
-              className="opacity-50 md:col-start-7 md:col-end-13 md:row-start-1 md:row-end-3 mx-auto self-center row-start-3 row-end-4 col-span-full"
-            />
+            <div className="relative md:col-start-7 md:col-end-13 md:row-start-1 md:row-end-3 row-start-3 row-end-4 col-span-full">
+              <Image
+                src="/find.svg"
+                alt="find graphic"
+                className="opacity-50"
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
           </div>
 
           <div className="col-start-2 col-end-12 mb-12 grid grid-cols-12 gap-8 md:gap-0">
-            <img
-              src="nofoldertwo.svg"
-              alt="beuatiful graphic"
-              className="opacity-50 md:col-start-1 md:col-end-6 self-center md:row-start-1 md:row-end-3 mx-auto row-start-3 row-end-4 col-span-full my-3"
-            />
+            <div className="relative md:col-start-1 md:col-end-6 md:row-start-1 md:row-end-3 row-start-3 row-end-4 col-span-full">
+              <Image
+                src="/nofoldertwo.svg"
+                alt="beautiful graphic"
+                className="opacity-50"
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
             <h2 className="text-green-500 md:text-4xl text-3xl font-medium text-center md:col-start-7 md:col-end-13 self-center row-start-1 row-end-2 col-span-full">
               Organise your links beautifully
             </h2>
             <p className="text-gray-600 text-center md:col-start-7 md:col-end-13 row-start-2 row-end-3 col-span-full my-2">
-              Let's face the truth: those folders in your bookmarks bar are
+              Let&apos;s face the truth: those folders in your bookmarks bar are
               ugly. LinkdList is not. LinkdList combines a modern design and
-              color scheme with the utility you've always wanted and needed.
+              color scheme with the utility you&apos;ve always wanted and
+              needed.
             </p>
           </div>
         </div>

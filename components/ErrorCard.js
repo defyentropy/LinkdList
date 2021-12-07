@@ -11,7 +11,7 @@ const ErrorCard = () => {
         Oops! There was an error.
       </h1>
       <p className="mb-3">
-        This could be because you don't have access to this resource.
+        This could be because you don&apos;t have access to this resource.
       </p>
 
       <Link href="/dashboard">

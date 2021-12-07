@@ -51,6 +51,7 @@ const LinkCard = ({ link, delete: deleteLink }) => {
         <a
           href={link.hyperlink}
           target="_blank"
+          rel="noreferrer"
           className="ml-auto px-3 py-2 w-24 rounded flex items-center justify-evenly transition bg-green-500 hover:bg-green-600 font-medium text-white"
         >
           <FlightIcon /> Visit

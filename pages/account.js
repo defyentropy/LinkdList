@@ -15,6 +15,7 @@ const Account = () => {
                 width="120px"
                 height="120px"
                 className="rounded-full mb-2 md:mb-0"
+                alt="User profile picture"
               />
             ) : null}
           </div>
